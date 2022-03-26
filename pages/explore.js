@@ -19,7 +19,7 @@ export default function Explore() {
     }else{
       router.push('/login')
     }
-  },[])
+  },[router]);
 
   return (
     <div>

@@ -19,7 +19,7 @@ export default function Home() {
     }else{
       router.push('/login')
     }
-  },[])
+  },[router]);
 
   return (
     <div>

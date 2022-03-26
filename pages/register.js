@@ -85,7 +85,7 @@ export default function Register() {
           </button>
           <button className="text-sm text-center w-full my-4">
             Already have an account?{" "}
-            <Link href="/login">
+            <Link href="/login" passHref >
               <span className="text-gray-600">Login</span>
             </Link>
           </button>
