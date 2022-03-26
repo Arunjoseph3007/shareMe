@@ -1,5 +1,5 @@
 import Topbar from "../public/Topbar";
-import SideBar from "../public/SideBar";
+import SideBar from "../public/Sidebar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect, useRef } from "react";
