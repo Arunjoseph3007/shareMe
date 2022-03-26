@@ -12,7 +12,7 @@ const Profile = () => {
 
 	useEffect(()=>{
     const fetchUser=async()=>{
-      const res = await fetch('http://localhost:8800/api/users/'+id)
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/'${id}`)
       const data = await res.json()
       setUser(data)
     }
