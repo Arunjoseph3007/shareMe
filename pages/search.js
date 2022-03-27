@@ -31,7 +31,6 @@ export default function Search() {
       try{
         const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/search?q=${name}`)
         const data = await response.json();
-        console.log(data)
         setResults(data)
       }catch(error){
         console.error(error)

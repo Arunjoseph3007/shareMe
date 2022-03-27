@@ -1,8 +1,9 @@
 import Feed from "./Feed";
 import PersonalInfo from "./PersonalInfo";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faMinus, faMessage } from "@fortawesome/free-solid-svg-icons";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/dist/client/router";
 
 const defaultProfilePic =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1024px-User-avatar.svg.png";
@@ -12,6 +13,7 @@ const defaultCoverPic =
 const ProflieSection = ({ user }) => {
   const [thisUser, setThisUser] = useState();
   const [isFollowing, setIsFollowing] = useState(false);
+  const router = useRouter();
 
   const handleFollow = async () => {
     try {
@@ -34,8 +36,32 @@ const ProflieSection = ({ user }) => {
       console.error(err);
     }
   };
+
+  const handleMessage = async ()=>{
+    try{
+        const response = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/conversations/`,{
+          method: "POST",
+          body: JSON.stringify({
+            senderId: localStorage.getItem('userId'),
+            receiverId: user._id,
+          }),
+          headers: {
+            "Content-type": "application/json",
+          },
+        })
+        const data = await response.json();
+        router.push({
+          pathname: '/messages',
+          query: { q: user._id },
+        })
+    }catch(error){
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("user"));
+    
     setThisUser(data);
     setIsFollowing(data.following.includes(user._id));
   }, []);
@@ -57,17 +83,25 @@ const ProflieSection = ({ user }) => {
       <div className="w-full flex flex-col items-center">
         <h2 className="font-bold capitalize text-2xl">{user.username}</h2>
         <p className="text-gray-400">{user.desc || "Hey there, I am awesome"}</p>
-        <button
-          onClick={handleFollow}
-          className="px-8 py-1 my-3 rounded-full tracking-wide border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold text-xl"
-        >
-          {isFollowing ? "Unfollow" : "Follow"}{" "}
-          {isFollowing ? (
-            <FontAwesomeIcon icon={faMinus} />
-          ) : (
-            <FontAwesomeIcon icon={faPlus} />
-          )}
-        </button>
+        <div>
+          <button
+            onClick={handleFollow}
+            className="px-8 py-1 my-3 mx-1 rounded-full tracking-wide border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold text-xl"
+          >
+            {isFollowing ? "Unfollow" : "Follow"}{" "}
+            {isFollowing ? (
+              <FontAwesomeIcon icon={faMinus} />
+            ) : (
+              <FontAwesomeIcon icon={faPlus} />
+            )}
+          </button>
+          <button
+            onClick={handleMessage}
+            className="px-8 py-1 my-3 mx-1 rounded-full tracking-wide border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold text-xl"
+          >
+            Message <FontAwesomeIcon icon={faMessage}/>
+          </button>
+        </div>
       </div>
       <div className="flex">
         <Feed userId={user._id} />

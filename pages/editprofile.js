@@ -12,14 +12,14 @@ const defaultCoverPic =
 
 const EditProfile = () => {
   const [user, setUser] = useState();
-  const [profilePic, setProfilePic] = useState(defaultProfilePic);
-  const [coverPic, setCoverPic] = useState(defaultCoverPic);
+  const [profilePic, setProfilePic] = useState();
+  const [coverPic, setCoverPic] = useState();
+  const [profileImageURL, setProfileImageURL] = useState()
+  const [coverImageURL, setCoverImageURL] = useState()
 
   const usernameRef = useRef();
   const emailRef = useRef();
   const descRef = useRef();
-  const coverRef = useRef();
-  const profileRef = useRef();
 
   const router = useRouter();
 
@@ -28,13 +28,51 @@ const EditProfile = () => {
   useEffect(() => {
     const data = JSON.parse(localStorage.getItem("user"));
     setUser(data);
-    setProfilePic(data.profilePicture);
-    setCoverPic(data.coverPicture);
+    setProfileImageURL(data.profilePicture);
+    setCoverImageURL(data.coverPicture);
   }, []);
+
+  useEffect(()=>{
+    if(!profilePic) return;
+
+    setProfileImageURL(URL.createObjectURL(profilePic))
+  },[profilePic])
+
+  useEffect(()=>{
+    if(!coverPic) return;
+
+    setCoverImageURL(URL.createObjectURL(coverPic))
+  },[coverPic])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setMessage("Updating Profile...")
+
     try {
+      if(profilePic){
+        const profileFormData = new FormData();
+        profileFormData.append("file", profilePic);
+        profileFormData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+        const profileImgResponse = await fetch( process.env.NEXT_PUBLIC_CLOUDINARY_URL, {
+            method: "POST",
+            body: profileFormData,
+          });
+        const profileImgData = await profileImgResponse.json();
+        setProfileImageURL(profileImgData.url);
+      }
+
+      if(coverPic){
+        const coverFormData = new FormData();
+        coverFormData.append("file", coverPic);
+        coverFormData.append("upload_preset", process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET);
+        const coverImgResponse = await fetch( process.env.NEXT_PUBLIC_CLOUDINARY_URL, {
+            method: "POST",
+            body: coverFormData,
+          });
+        const coverImgData = await coverImgResponse.json();
+        setCoverImageURL(coverImgData.url);
+      }
+
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/users/${user._id}`,
         {
@@ -44,8 +82,8 @@ const EditProfile = () => {
             username: usernameRef.current.value || user.username,
             email: emailRef.current.value || user.email,
             desc: descRef.current.value || user.desc,
-            coverPicture: coverRef.current.value || user.coverPicture,
-            profilePicture: profileRef.current.value || user.profilePicture,
+            coverPicture: coverImageURL || user.coverPicture,
+            profilePicture: profileImageURL || user.profilePicture,
           }),
           headers: {
             "Content-type": "application/json",
@@ -117,30 +155,30 @@ const EditProfile = () => {
                 />
               </div>
               <div className="w-full py-4 border-b flex">
-                <label className="flex-1" htmlFor="coverpic">
+                <h2 className="flex-1" >
                   Cover Photo
+                </h2>
+                <label htmlFor="coverpic" className="px-8 py-1 rounded-full tracking-wide border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold text-xl">
+                  Upload
                 </label>
                 <input
-                  onChange={(e) => setCoverPic(e.target.value)}
-                  ref={coverRef}
-                  defaultValue={user.coverPicture}
-                  placeholder="Paste the link here"
-                  className="border-2 rounded-md w-60 p-1 px-2"
-                  type="text"
+                  onChange={(e) => setCoverPic(e.target.files[0])}
+                  style={{display: "none"}}
+                  type="file"
                   id="coverpic"
                 />
               </div>
               <div className="w-full py-4 border-b  flex">
-                <label className="flex-1" htmlFor="profilepic">
+                <h2 className="flex-1">
                   Profile Photo
+                </h2>
+                <label htmlFor="profilepic" className="px-8 py-1 rounded-full tracking-wide border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold text-xl">
+                  Upload
                 </label>
                 <input
-                  onChange={(e) => setProfilePic(e.target.value)}
-                  ref={profileRef}
-                  defaultValue={user.profilePicture}
-                  placeholder="Paste the link here"
-                  className="border-2 rounded-md w-60 p-1 px-2"
-                  type="text"
+                  onChange={(e) => setProfilePic(e.target.files[0])}
+                  style={{display: "none"}}
+                  type="file"
                   id="profilepic"
                 />
               </div>
@@ -163,12 +201,12 @@ const EditProfile = () => {
                   <img
                     alt="coverPic"
                     className="object-cover w-full h-[180px]"
-                    src={coverPic || defaultCoverPic}
+                    src={coverImageURL || defaultCoverPic}
                   />
                   <img
                     alt="profilePic"
                     className="object-cover border-4 border-white rounded-full w-[100px] h-[100px] translate-x-1/2 translate-y-1/2 absolute bottom-0 right-1/2"
-                    src={profilePic || defaultProfilePic}
+                    src={ profileImageURL || defaultProfilePic}
                   />
                 </div>
                 <div className="flex flex-col items-center justify-center w-full">
