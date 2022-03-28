@@ -32,17 +32,17 @@ const EditProfile = () => {
     setCoverImageURL(data.coverPicture);
   }, []);
 
-  useEffect(()=>{
-    if(!profilePic) return;
+  // useEffect(()=>{
+  //   if(!profilePic) return;
 
-    setProfileImageURL(URL.createObjectURL(profilePic))
-  },[profilePic])
+  //   setProfileImageURL(URL.createObjectURL(profilePic))
+  // },[profilePic])
 
-  useEffect(()=>{
-    if(!coverPic) return;
+  // useEffect(()=>{
+  //   if(!coverPic) return;
 
-    setCoverImageURL(URL.createObjectURL(coverPic))
-  },[coverPic])
+  //   setCoverImageURL(URL.createObjectURL(coverPic))
+  // },[coverPic])
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -97,7 +97,7 @@ const EditProfile = () => {
         setMessage(data);
       }
     } catch (err) {
-      setMessage(data);
+      setMessage(err);
     }
   };
 
@@ -107,8 +107,8 @@ const EditProfile = () => {
       <div className="w-full flex overflow-hidden">
         <SideBar />
         {user && (
-          <div className="w-full m-3 p-3 rounded-md border flex space-x-2">
-            <form onSubmit={handleSubmit} className="w-2/3 p-3 rounded-md ">
+          <div className="w-full p-1 rounded-md border flex space-x-2">
+            <form onSubmit={handleSubmit} className="w-full p-3 rounded-md ">
               {message && (
                 <h3 className="text-center p-2 bg-gray-300 text-white">
                   {message}
@@ -186,17 +186,17 @@ const EditProfile = () => {
                 type="submit"
                 className="p-3 mx-auto tracking-widest border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold w-1/2 text-xl"
               >
-                Edit Profile
+                Edit
               </button>
               <button
                 onClick={() => router.push("/profile")}
                 className="p-3 mx-auto tracking-widest border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold w-1/2 text-xl"
               >
-                Back to Profile
+                Back
               </button>
             </form>
             {user && (
-              <div className="w-1/3 m-3 rounded-md border">
+              <div className="w-1/3 m-3 rounded-md border hidden lg:block">
                 <div className="relative mb-[90px]">
                   <img
                     alt="coverPic"

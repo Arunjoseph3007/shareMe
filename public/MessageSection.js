@@ -3,8 +3,10 @@ import Post from "./Post";
 import Share from "./Share";
 import { useEffect, useState, useRef } from "react";
 import {format }  from 'timeago.js'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faBars} from "@fortawesome/free-solid-svg-icons";
 
-const MessageSection = ({selectedConversation,socket}) => {
+const MessageSection = ({isOpen,setIsOpen,selectedConversation,socket}) => {
 	const [messages, setMessages] = useState([])
 	const [reciever, setReceiver] = useState()
 	const [currentUser, setCurrentUser] = useState({_id:null})
@@ -104,12 +106,13 @@ const MessageSection = ({selectedConversation,socket}) => {
 	},[socket.current])
 
 	return (
-		<div className="w-full border-r py-[65px] relative h-[88vh]">
+		<div className="w-full border-r py-[65px] relative h-[90vh]">
 			{reciever && 
 			<>
 				<div className="px-2 h-[65px] bg-gray-300 flex z-[999] items-center space-x-2 inset-x-0 top-0 absolute">
 					<Image className="rounded-full" src={reciever.profilePicture} width={40} height={40} />
-					<h1 className="font-bold text-xl">{reciever.username}</h1>
+					<h1 className="font-bold text-xl flex-1">{reciever.username}</h1>
+					<FontAwesomeIcon icon={faBars} onClick={()=>setIsOpen(!isOpen)} className="p-2 lg:hidden" />
 				</div>
 				<div className="h-full overflow-y-scroll flex flex-col">
 					{!messages.length && (
@@ -123,7 +126,7 @@ const MessageSection = ({selectedConversation,socket}) => {
 							<div 
 								ref={scrollRef} 
 								key={msg._id || msg.createdAt} 
-								className={`m-2 max-w-[70%] flex flex-col justify-center ${own ? "self-end":"self-start"}`} >
+								className={`m-2 max-w-[400px] flex flex-col justify-center ${own ? "self-end":"self-start"}`} >
 								<div className="flex space-x-2 items-center" >
 									<div className="min-w-[45px]">
 										<Image

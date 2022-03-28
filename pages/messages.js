@@ -14,7 +14,10 @@ export default function Messages() {
   const socket = useRef()
   const router = useRouter();
 
+  const [isOpen, setIsOpen] = useState(true)
+
   useEffect(()=>{
+    setIsOpen(window.innerWidth>760)
     socket.current = io.connect(process.env.NEXT_PUBLIC_SOCKETIO_URL)
   },[])
 
@@ -68,8 +71,14 @@ export default function Messages() {
       <Topbar />
       <div className="w-full flex overflow-hidden">
         <SideBar />
-        <MessageSection socket={socket} selectedConversation={selectedConversation} />
+        <MessageSection
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          socket={socket} 
+          selectedConversation={selectedConversation} />
         <ChatSelector 
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
           conversations={conversations} 
           selectedConversation={selectedConversation} 
           setSelectedConversation={setSelectedConversation} />

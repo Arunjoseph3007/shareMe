@@ -9,7 +9,7 @@ import Image from "next/image";
 
 const Rightbar = () => {
   return (
-    <div className="w-2/5 p-2">
+    <div className="w-2/5 p-2 hidden lg:block ">
       <div className="flex space-x-2 text-sm border p-2 rounded-md">
         <FontAwesomeIcon className="text-2xl p-1" icon={faGifts} />
         <p>

@@ -68,7 +68,7 @@ const Share = () => {
         <div className="p-3 text-xl cursor-pointer">
           <label htmlFor="file" className="cursor-pointer">
             <FontAwesomeIcon icon={faImage} className="mr-4" />
-            Photo
+            <span className="hidden md:inline">Photo</span>
           </label>
           <input
             onChange={(e) => setImg(e.target.files[0])}
@@ -79,19 +79,19 @@ const Share = () => {
         </div>
         <div className="p-3 text-xl ">
           <FontAwesomeIcon icon={faTag} className="mr-4" />
-          Tag
+          <span className="hidden md:inline">Tag</span>
         </div>
         <div className="p-3 text-xl ">
           <FontAwesomeIcon icon={faLocation} className="mr-4" />
-          Location
+          <span className="hidden md:inline">Location</span>
         </div>
         <div className="p-3 text-xl ">
           <FontAwesomeIcon icon={faSmile} className="mr-4" />
-          Feeling
+          <span className="hidden md:inline">Feeling</span>
         </div>
         <button
           onClick={(e) => handleUpload(e)}
-          className="px-8 py-1 rounded-full tracking-wide border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold text-xl"
+          className="px-8 py-1 rounded-full tracking-wide border bg-black text-white hover:bg-gray-300 hover:text-black duration-300 transition ease-in-out  bold sm:text-xl text-xs"
         >
           Share
         </button>

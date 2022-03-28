@@ -3,7 +3,7 @@ import firstpost from "./assets/first-post.jpg";
 
 const PersonalInfo = () => {
   return (
-    <div className="w-2/5 p-3 pl-0">
+    <div className="w-2/5 hidden md:block p-3 pl-0">
       <div className=" my-3 rounded-md p-3 border">
         <h2 className="font-bold mb-3">User Information</h2>
         <p>

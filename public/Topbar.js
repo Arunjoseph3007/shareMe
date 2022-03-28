@@ -29,11 +29,14 @@ const Topbar = () => {
   };
 
   return (
-    <div className="w-full h-[12vh] items-center flex shadow-md p-5 px-10">
+    <div className="w-full h-[10vh] items-center flex shadow-md p-5 relative">
       <Link href="/" passHref>
-        <h1 className="text-xl cursor-pointer font-bold w-1/4 text-bold uppercase">
+        <h1 className="text-xl hidden lg:block cursor-pointer font-bold w-1/4 text-bold uppercase">
           s h a r e <span className="text-gray-500">M e</span>
         </h1>
+      </Link>
+      <Link href="/" passHref>
+        <img src="https://1000logos.net/wp-content/uploads/2017/06/Font-Skype-Logo.jpg" alt="logo" className="lg:hidden w-[40px] mr-2" />
       </Link>
       <div className="flex w-full space-x-2 items-center">
         <Link href={{ pathname: '/search', query: { name: query } }} passHref>
@@ -48,7 +51,7 @@ const Topbar = () => {
           className="p-2 w-5/6 rounded-xl text-xl outline-none"
         ></input>
       </div>
-      <div className="flex items-center space-x-6 mr-4">
+      <div className=" items-center hidden md:flex space-x-6 mr-4">
         <Link href="/explore" passHref>
           <div className="flex cursor-pointer">
             <FontAwesomeIcon className="text-xl mr-2" icon={faPeopleArrows} />
@@ -65,7 +68,7 @@ const Topbar = () => {
           <h3 className="capitalize">{username}</h3>
         </Link>
       </div>
-      <div className="relative">
+      <div>
         <img
           onClick={() => setModal(!modal)}
           width="60"
@@ -75,15 +78,15 @@ const Topbar = () => {
           src={profilePic}
         />
         {modal && (
-          <div className="absolute z-[999] bg-white p-4 rounded-md w-[200px] border shadow top-[180%] right-0">
-            <Link href="/profile">
+          <div className="absolute z-[999] shadow-xl bg-white p-4 rounded-md w-full md:w-[300px] right-0 border shadow top-[10vh]">
+            <Link href="/messages">
               <a className="p-2 mb-2 border-b block">
-                <FontAwesomeIcon icon={faUser}/> Profile
+                <FontAwesomeIcon icon={faMessage}/> Chat
               </a>
             </Link>
-            <Link href="/profile">
+            <Link href="/explore">
               <a className="p-2 my-2 border-b block">
-                <FontAwesomeIcon icon={faUser}/> Profile
+                <FontAwesomeIcon icon={faPeopleArrows}/> Explore
               </a>
             </Link>
             <Link href="/profile">

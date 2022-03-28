@@ -14,7 +14,7 @@ import Link from "next/dist/client/link";
 
 const SideBar = () => {
   return (
-    <div className="w-2/5 max-h-screen border-r-2 overflow-y-scroll">
+    <div className="w-2/5 max-h-screen border-r-2 hidden lg:block overflow-y-scroll">
       <ul>
         <Link href="/" passHref>
           <li className="p-3 text-xl border-b border-gray-100">

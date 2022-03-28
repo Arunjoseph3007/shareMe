@@ -38,19 +38,25 @@ export default function Register() {
   };
 
   return (
-    <div className="flex w-full h-screen items-center justify-around">
-      <div className="h-full w-1/2 border flex relative items-center justify-center">
-        <h1 className="text-4xl font-extrabold">
+    <div className="flex flex-col lg:flex-row w-full h-screen items-center justify-start">
+      <div className="h-2/5 lg:h-full w-full border flex relative items-center justify-center">
+        <div className="absolute h-full w-full">
+          <img 
+            src="https://u7.uidownload.com/vector/452/512/vector-sunset-background-and-sea-vector-svg-ai.jpg" 
+            alt="draw" 
+            className="object-cover h-full w-full"/>
+        </div>
+        <h1 style={{textShadow:"0 0 20px black"}} className="text-3xl lg:text-4xl z-10 text-white font-extrabold">
           Welcome,
           <br /> to everything
-          <br /> But better
+          <br /> But better.
         </h1>
-        <div className="absolute h-[100px] w-[500px] rounded-full bg-black bottom-10 -left-10 "></div>
+        <div className="absolute h-[100px] w-[500px] hidden lg:block rounded-full bg-white bottom-10 -left-12 "></div>
       </div>
-      <div className="w-1/2 flex items-center justify-center">
+      <div className="w-full h-full flex items-center justify-center">
         <form
           onSubmit={(e) => handleSubmit(e)}
-          className="p-4 border w-3/5 shadow-md"
+          className="p-4 border w-full m-2 max-w-[380px] shadow-md"
         >
           {err && <h1 className="text-center bg-gray-300 border border-gray-700 rounded-md w-full p-2">Error : {err}</h1>}
           <input
