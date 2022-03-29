@@ -6,7 +6,7 @@ import {format }  from 'timeago.js'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faBars} from "@fortawesome/free-solid-svg-icons";
 
-const MessageSection = ({isOpen,setIsOpen,selectedConversation,socket}) => {
+const MessageSection = ({isOpen, setIsOpen, selectedConversation, socket}) => {
 	const [messages, setMessages] = useState([])
 	const [reciever, setReceiver] = useState()
 	const [currentUser, setCurrentUser] = useState({_id:null})
@@ -19,7 +19,7 @@ const MessageSection = ({isOpen,setIsOpen,selectedConversation,socket}) => {
 		if(!newMessage) return
 		
 		//update on socket
-		socket.current.emit('sendMessage',({
+		socket.emit('sendMessage',({
 			userId:currentUser._id,
 			recieverId:reciever._id,
 			text:newMessage
@@ -96,14 +96,14 @@ const MessageSection = ({isOpen,setIsOpen,selectedConversation,socket}) => {
 
 	//socket getMessage
 	useEffect(()=>{
-		socket.current?.on('getMessage', data=>{
+		socket.on('getMessage', data=>{
 			setArrivalMessage({
 				senderId:data.userId,
 				text:data.text,
 				createdAt: Date.now()
 			})
 		})
-	},[socket.current])
+	},[socket])
 
 	return (
 		<div className="w-full border-r py-[65px] relative h-[90vh]">

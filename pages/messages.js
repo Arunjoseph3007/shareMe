@@ -5,28 +5,29 @@ import MessageSection from "../public/MessageSection";
 import ChatSelector from "../public/ChatSelector";
 import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/dist/client/router";
-import {io} from 'socket.io-client'
+import socketIO from 'socket.io-client'
+
+let socket;
 
 export default function Messages() {
   const [conversations,setConversations] = useState([])
   const [selectedConversation, setSelectedConversation] = useState()
   const [userId, setUserId] = useState(null);
-  const socket = useRef()
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(true)
 
   useEffect(()=>{
     setIsOpen(window.innerWidth>760)
-    socket.current = io.connect(process.env.NEXT_PUBLIC_SOCKETIO_URL)
-  },[])
-
-  useEffect(()=>{
-    socket.current.emit("addUser",localStorage.getItem('userId'))
-    socket.current.on("getUsers",users=>{
+    socket = socketIO(process.env.NEXT_PUBLIC_SOCKETIO_URL, { transports: ['websocket'] });
+    socket.emit("addUser",localStorage.getItem('userId'))
+    socket.on("getUsers",users=>{
       // console.log("users",users)
     })
-  },[socket])
+
+    console.log(process.env.NEXT_PUBLIC_SOCKETIO_URL+'/')
+    console.log(socket)
+  },[socket]);
 
   //To see if user is directed to a particula conv
   useEffect(()=>{
@@ -71,11 +72,12 @@ export default function Messages() {
       <Topbar />
       <div className="w-full flex overflow-hidden">
         <SideBar />
-        <MessageSection
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          socket={socket} 
-          selectedConversation={selectedConversation} />
+        {socket && 
+          <MessageSection
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            socket={socket} 
+            selectedConversation={selectedConversation} />}
         <ChatSelector 
           isOpen={isOpen}
           setIsOpen={setIsOpen}
@@ -86,3 +88,6 @@ export default function Messages() {
     </div>
   );
 }
+
+
+//wss://sharemesocketserver.herokuapp.com/socket.io/?EIO=4&transport=websocket
