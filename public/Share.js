@@ -35,7 +35,6 @@ const Share = () => {
         },
       });
       const data = await respones.json();
-      console.log(data);
     } catch (err) {
       console.error(err);
     }

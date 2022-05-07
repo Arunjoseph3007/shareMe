@@ -2,10 +2,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faPeopleArrows,
   faSearch,
-  faMountain,
+  faVideo,
   faMessage,
   faUser,
-  faEdit
+  faEdit,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -36,16 +36,20 @@ const Topbar = () => {
         </h1>
       </Link>
       <Link href="/" passHref>
-        <img src="https://1000logos.net/wp-content/uploads/2017/06/Font-Skype-Logo.jpg" alt="logo" className="lg:hidden w-[40px] mr-2" />
+        <img
+          src="https://1000logos.net/wp-content/uploads/2017/06/Font-Skype-Logo.jpg"
+          alt="logo"
+          className="lg:hidden w-[40px] mr-2"
+        />
       </Link>
       <div className="flex w-full space-x-2 items-center">
-        <Link href={{ pathname: '/search', query: { name: query } }} passHref>
+        <Link href={{ pathname: "/search", query: { name: query } }} passHref>
           <div>
-            <FontAwesomeIcon icon={faSearch} />        
+            <FontAwesomeIcon icon={faSearch} />
           </div>
         </Link>
         <input
-          onChange={e=>setQuery(e.target.value)}
+          onChange={(e) => setQuery(e.target.value)}
           type="text"
           placeholder="Search..."
           className="p-2 w-5/6 rounded-xl text-xl outline-none"
@@ -78,25 +82,30 @@ const Topbar = () => {
           src={profilePic}
         />
         {modal && (
-          <div className="absolute z-[999] shadow-xl bg-white p-4 rounded-md w-full md:w-[300px] right-0 border shadow top-[10vh]">
+          <div className="absolute z-[999] shadow-2xl bg-white p-4 rounded-md w-full md:w-[300px] right-0 border-3 shadow top-[10vh]">
             <Link href="/messages">
               <a className="p-2 mb-2 border-b block">
-                <FontAwesomeIcon icon={faMessage}/> Chat
+                <FontAwesomeIcon icon={faMessage} /> Chat
               </a>
             </Link>
             <Link href="/explore">
               <a className="p-2 my-2 border-b block">
-                <FontAwesomeIcon icon={faPeopleArrows}/> Explore
+                <FontAwesomeIcon icon={faPeopleArrows} /> Explore
               </a>
             </Link>
             <Link href="/profile">
               <a className="p-2 my-2 border-b block">
-                <FontAwesomeIcon icon={faUser}/> Profile
+                <FontAwesomeIcon icon={faUser} /> Profile
               </a>
             </Link>
             <Link href="/editprofile">
               <a className="p-2 my-2 border-b block">
-                <FontAwesomeIcon icon={faEdit}/> Edit Profile
+                <FontAwesomeIcon icon={faEdit} /> Edit Profile
+              </a>
+            </Link>
+            <Link href="/videocalls">
+              <a className="p-2 my-2 border-b block">
+                <FontAwesomeIcon icon={faVideo} /> Video Calls
               </a>
             </Link>
             <button

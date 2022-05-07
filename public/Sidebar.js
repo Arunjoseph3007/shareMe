@@ -2,10 +2,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMessage,
   faVideo,
-  faBookmark,
   faBook,
   faUser,
-  faTools,
   faWifi,
   faEdit,
   faHatCowboy,
@@ -40,10 +38,10 @@ const SideBar = () => {
             Edit Profile
           </li>
         </Link>
-        <Link href="/" passHref>
+        <Link href="/videocalls" passHref>
           <li className="p-3 text-xl border-b border-gray-100">
-            <FontAwesomeIcon icon={faTools} className="text-sm mr-4" />
-            Jobs
+            <FontAwesomeIcon icon={faVideo} className="text-sm mr-4" />
+            Video Calls
           </li>
         </Link>
         <Link href="/" passHref>
